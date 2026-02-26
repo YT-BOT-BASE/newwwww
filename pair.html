@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SO MD - Pairing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0f1e, #1a1f2e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #00ff88;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            border: none;
+            border-radius: 10px;
+            color: #0a0f1e;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,255,136,0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff88;
+            word-break: break-all;
+        }
+        .info {
+            margin-top: 20px;
+            color: #888;
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SO MD PAIRING</h1>
+        <input type="text" id="number" placeholder="Enter number with country code (e.g., 94724389699)">
+        <button onclick="pair()">Generate Code</button>
+        <div id="result"></div>
+        <div class="info">
+            <p>Enter the 8-digit code in WhatsApp → Linked Devices → Link a Device</p>
+        </div>
+    </div>
+    
+    <script>
+        async function pair() {
+            const number = document.getElementById('number').value.replace(/[^0-9]/g, '');
+            if (!number) {
+                alert('Please enter a number');
+                return;
+            }
+            
+            document.getElementById('result').innerHTML = '⏳ Please wait...';
+            
+            try {
+                const response = await fetch(`/code?number=${number}`);
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `📱 CODE: ${data.code}`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = '❌ Error generating code';
+            }
+        }
+    </script>
+</body>
+</html>

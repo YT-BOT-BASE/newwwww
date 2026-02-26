@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SO MD WhatsApp Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0f1e, #1a1f2e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ff88;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #00ff88;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        input::placeholder {
+            color: #666;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            border: none;
+            border-radius: 10px;
+            color: #0a0f1e;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .code-box {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .code-box:hover {
+            background: rgba(0, 255, 136, 0.2);
+        }
+        
+        .code-box h3 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .code-box p {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .info-item i {
+            font-size: 24px;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+        
+        .info-item span {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .info-item strong {
+            font-size: 18px;
+            color: #00ff88;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .instructions h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .actions button {
+            flex: 1;
+            padding: 12px;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #00ff88;
+            color: #00ff88;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: none;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00ff88;
+            color: #0a0f1e;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            transform: translateX(150%);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #0a0f1e;
+            border-radius: 50%;
+            border-top-color: #00ff88;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            border-radius: 20px;
+            color: #00ff88;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification">Code copied to clipboard!</div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <img src="https://files.catbox.moe/so-md-logo.jpg" alt="SO MD Logo" onerror="this.src='https://via.placeholder.com/120'">
+            </div>
+            
+            <h1>SO MD WhatsApp Bot</h1>
+            <div class="subtitle">Created by SHANUKA SHAMEEN</div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-robot"></i>
+                    <span>Bot Name</span>
+                    <strong>SO MD</strong>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-user"></i>
+                    <span>Owner</span>
+                    <strong>SHANUKA</strong>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Number</span>
+                    <strong>94724389699</strong>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Status</span>
+                    <strong id="status">Online <span class="status-badge">🟢</span></strong>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label><i class="fas fa-phone-alt"></i> Your WhatsApp Number</label>
+                <input type="text" id="number" placeholder="e.g., 94724389699" value="9472">
+            </div>
+            
+            <button id="submit">
+                <i class="fas fa-link"></i> Generate Pairing Code
+            </button>
+            
+            <div id="result"></div>
+            
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> How to Pair</h3>
+                <ol>
+                    <li>Enter your WhatsApp number with country code (e.g., 94724389699)</li>
+                    <li>Click "Generate Pairing Code" button</li>
+                    <li>Wait for the 8-digit code to appear</li>
+                    <li>Open WhatsApp on your phone → Linked Devices → Link a Device</li>
+                    <li>Enter the 8-digit code</li>
+                    <li>Done! Your bot will be active</li>
+                </ol>
+            </div>
+            
+            <div class="actions">
+                <button class="btn-secondary" id="clearBtn">
+                    <i class="fas fa-eraser"></i> Clear
+                </button>
+                <button class="btn-secondary" id="checkBtn">
+                    <i class="fas fa-sync"></i> Check Status
+                </button>
+            </div>
+            
+            <div class="footer">
+                <p>© 2024 SO MD WhatsApp Bot | All rights reserved</p>
+                <p>This is not an official WhatsApp product</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const numberInput = document.getElementById('number');
+        const submitBtn = document.getElementById('submit');
+        const resultDiv = document.getElementById('result');
+        const notification = document.getElementById('notification');
+        
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        async function copyCode(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Code copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        }
+        
+        submitBtn.addEventListener('click', async () => {
+            const number = numberInput.value.replace(/[^0-9]/g, '');
+            
+            if (!number || number.length < 10) {
+                resultDiv.innerHTML = `
+                    <div style="color: #ff4444; text-align: center; padding: 10px; background: rgba(255, 68, 68, 0.1); border-radius: 10px;">
+                        <i class="fas fa-exclamation-circle"></i> Please enter a valid number
+                    </div>
+                `;
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            
+            resultDiv.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <div class="loader"></div>
+                    <p style="margin-top: 10px; color: #00ff88;">Please wait while we generate your code...</p>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`/code?number=${number}`);
+                const data = await response.json();
+                
+                if (data.code) {
+                    resultDiv.innerHTML = `
+                        <div class="code-box" onclick="copyCode('${data.code}')">
+                            <h3><i class="fas fa-copy"></i> Click to copy</h3>
+                            <p>${data.code}</p>
+                            <small style="color: #888;">Enter this 8-digit code in WhatsApp</small>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="color: #ff4444; text-align: center; padding: 20px; background: rgba(255, 68, 68, 0.1); border-radius: 10px;">
+                            <i class="fas fa-exclamation-triangle"></i> Failed to generate code. Please try again.
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div style="color: #ff4444; text-align: center; padding: 20px; background: rgba(255, 68, 68, 0.1); border-radius: 10px;">
+                        <i class="fas fa-exclamation-triangle"></i> Server error. Please try again later.
+                    </div>
+                `;
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-link"></i> Generate Pairing Code';
+        });
+        
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            numberInput.value = '';
+            resultDiv.innerHTML = '';
+            numberInput.focus();
+        });
+        
+        document.getElementById('checkBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/ping');
+                const data = await response.json();
+                
+                showNotification(`Bot is ${data.status} | ${data.sessions} active sessions`);
+            } catch (error) {
+                showNotification('Failed to check bot status');
+            }
+        });
+        
+        numberInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+        
+        // Auto focus on number input
+        numberInput.focus();
+    </script>
+</body>
+</html>
