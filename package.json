@@ -25,7 +25,7 @@
     "@dark-yasiya/scrap": "^1.0.1",
     "moment-timezone": "^0.5.43",
     "mongodb": "^6.3.0",
-    "@google/generative-ai": "^1.21.0",
+    "@google/genai": "^1.22.0",
     "imgbb-uploader": "^1.5.1",
     "telegraph-uploader": "^2.0.0",
     "file-type": "^18.7.0",
